@@ -1,0 +1,125 @@
+{
+  "resources": ["../../assets/sounds/sfx.ogg", "../../assets/sounds/sfx.m4a"],
+  "spritemap": {
+    "splash": {
+      "start": 0,
+      "end": 0.526,
+      "loop": false
+    },
+    "nodamage": {
+      "start": 0.546,
+      "end": 0.731,
+      "loop": false
+    },
+    "buaaa": {
+      "start": 0.731,
+      "end": 3.0,
+      "loop": false
+    },
+    "falling": {
+      "start": 3.144,
+      "end": 6.0,
+      "loop": false
+    },
+    "explosion": {
+      "start": 6.154,
+      "end": 9.0,
+      "loop": false
+    },
+    "bosshit": {
+      "start": 9.39,
+      "end": 9.832,
+      "loop": false
+    },
+    "shoot": {
+      "start": 10.0,
+      "end": 10.814,
+      "loop": false
+    },
+    "gloria": {
+      "start": 11.0,
+      "end": 12.749,
+      "loop": false
+    },
+    "nientedimeno": {
+      "start": 12.759,
+      "end": 13.492,
+      "loop": false
+    },
+    "allora": {
+      "start": 13.574,
+      "end": 14.053,
+      "loop": false
+    },
+    "bare": {
+      "start": 14.123,
+      "end": 15.885,
+      "loop": false
+    },
+    "bestia": {
+      "start": 15.919,
+      "end": 16.66,
+      "loop": false
+    },
+    "ahhh": {
+      "start": 16.727,
+      "end": 18.547,
+      "loop": false
+    },
+    "cat": {
+      "start": 18.766,
+      "end": 20.1,
+      "loop": false
+    },
+
+    "lockdown1": {
+      "start": 20.316,
+      "end": 21.276,
+      "loop": false
+    },
+    "lockdown2": {
+      "start": 21.283,
+      "end": 22.0,
+      "loop": false
+    },
+    "1up": {
+      "start": 22.234,
+      "end": 22.864,
+      "loop": false
+    },
+
+    "plutonio": {
+      "start": 23.065,
+      "end": 24.6,
+      "loop": false
+    },
+
+    "chebello": {
+      "start": 24.835,
+      "end": 25.386,
+      "loop": false
+    },
+    "fatality": {
+      "start": 25.461,
+      "end": 27.3,
+      "loop": false
+    },
+
+    "explo": {
+      "start": 27.43,
+      "end": 28.063,
+      "loop": false
+    },
+
+    "launch": {
+      "start": 28.07,
+      "end": 28.625,
+      "loop": false
+    },
+    "seismic": {
+      "start": 28.625,
+      "end": 30,
+      "loop": false
+    }
+  }
+}
