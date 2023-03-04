@@ -12,7 +12,7 @@ export default class Preloader extends Phaser.Scene {
   }
 
   preload() {
-    this.cameras.main.setBackgroundColor("#ffffff");
+    this.cameras.main.setBackgroundColor("#7b7971");
     this._progress = this.add.graphics();
     this.loadAssets();
   }
@@ -50,7 +50,7 @@ export default class Preloader extends Phaser.Scene {
       this._progress.clear();
       this._progress.fillStyle(0xff0000, 1);
       this._progress.fillRect(0, 530, GameData.globals.width * value, 70);
-      this._loading.setText("Loading...");
+      this._loading.setText("Lanciando un incantesimo...");
     });
 
     this.load.on("complete", () => {

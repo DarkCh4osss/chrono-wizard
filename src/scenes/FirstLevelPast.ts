@@ -2,7 +2,7 @@ import Player from "../gameObjects/Player/Player";
 import Flower from "../gameObjects/Flower/Flower";
 // import BlueFlower from "../gameObjects/Flower/BlueFlower";
 
-export default class FirstLevel extends Phaser.Scene {
+export default class FirstLevelPast extends Phaser.Scene {
   private _platforms: Phaser.Physics.Arcade.StaticGroup;
   private _player: Player;
   private _flower: Flower;
@@ -12,21 +12,22 @@ export default class FirstLevel extends Phaser.Scene {
   private _mainCamera: Phaser.Cameras.Scene2D.Camera;
   private _text: Phaser.GameObjects.Text;
 
+  private _initialTime: number;
+
   constructor() {
-    super({ key: "FirstLevel" });
+    super({ key: "FirstLevelPast" });
   }
 
-  // init(_gotFlower: boolean) {
-  //   this._flowerObtained = _gotFlower;
-  // }
-
-  preload(_gotFlower: boolean) {
+  init(_gotFlower: boolean) {
     this._flowerObtained = _gotFlower;
+  }
+
+  preload() {
     this.load.image("collider", "assets/images/platform_test.png");
     this.load.image("vertical_collider", "assets/images/vertical-obstacle.png");
     this.load.image(
-      "primo_livello_presente",
-      "assets/images/primo_livello_presente.png"
+      "primo_livello_passato",
+      "assets/images/primo_livello_passato.png"
     );
     this.load.spritesheet("wizard", "assets/playerAssets/WizardIdle.png", {
       frameWidth: 88,
@@ -40,7 +41,9 @@ export default class FirstLevel extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor("#8b7971");
-    console.log("create:FirstLevel");
+    console.log("create:FirstLevelPast");
+
+    this._initialTime = 10;
 
     this.add.image(
       this.game.canvas.width / 2,
@@ -48,7 +51,7 @@ export default class FirstLevel extends Phaser.Scene {
       "bg"
     );
     this.add
-      .image(this.game.canvas.width / 2, 500, "primo_livello_presente")
+      .image(this.game.canvas.width / 2, 500, "primo_livello_passato")
       .setScale(2);
 
     this._mainCamera = this.cameras.main;
@@ -72,8 +75,6 @@ export default class FirstLevel extends Phaser.Scene {
     this._platforms.create(800, 620, "collider");
     this._platforms.create(1030, 570, "collider");
     this._platforms.create(1220, 470, "collider");
-    this._platforms.create(170, 550, "vertical_collider").setScale(0.5, 5);
-    this._platforms.create(90, 550, "vertical_collider").setScale(0.5, 5);
     this._platforms.create(1100, 350, "vertical_collider").setScale(0.5, 5);
     console.log(this._platforms.getChildren()[6]);
 
@@ -98,7 +99,7 @@ export default class FirstLevel extends Phaser.Scene {
     this.physics.add.collider(this._player, this._platforms);
     this.physics.add.collider(this._flower, this._platforms);
     this.physics.add.collider(this._player, this._flower, () => {
-      this.scene.start("GameOver");
+      this._flowerObtained = true;
     });
 
     this.followPlayer();
@@ -108,7 +109,9 @@ export default class FirstLevel extends Phaser.Scene {
     //   .setScrollFactor(0)
     //   .setFontSize(30)
     //   .setShadow(2, 2, "#000000", 2)
-    //   .setStroke("#ff0000", 5);
+    //   .setStroke("#ff0000", 5);]
+
+    console.log(this.formatTime(this._initialTime));
   }
 
   followPlayer() {
@@ -142,11 +145,23 @@ export default class FirstLevel extends Phaser.Scene {
     );
   }
 
+  formatTime(seconds: number) {
+    // Minutes
+    let minutes = Math.floor(seconds / 60);
+    // Seconds
+    let partInSeconds: String = (seconds % 60).toString();
+    return `${partInSeconds}`;
+  }
+
+  onEvent() {
+    this._initialTime -= 1; // One second
+  }
+
   update(time: number, delta: number) {
     this._player.update(time, delta);
 
-    if (this._player.getCurors().shift.isDown) {
-      this.scene.start("FirstLevelPast");
+    if (this.formatTime(this._initialTime) === "0") {
+      this.scene.start("FirstLevel");
     }
   }
 }

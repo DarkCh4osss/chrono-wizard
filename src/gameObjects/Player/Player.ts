@@ -10,6 +10,7 @@ export default class Player
   private _body: Phaser.Physics.Arcade.Body;
   private _cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   private _velocity: number = 160;
+  private _canDoubleJump: boolean;
 
   constructor(params: genericConfig) {
     super(params.scene, params.x, params.y, params.key);
@@ -27,41 +28,66 @@ export default class Player
     this._scene.add.existing(this);
 
     this.anims.create({
-      key: "left",
-      frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
+      key: "idle",
+      frames: this.anims.generateFrameNumbers("wizard", { start: 0, end: 19 }),
       frameRate: 10,
       repeat: -1,
     });
 
-    this.anims.create({
-      key: "turn",
-      frames: [{ key: "dude", frame: 4 }],
-      frameRate: 20,
-    });
+    // this.anims.create({
+    //   key: "turn",
+    //   frames: [{ key: "dude", frame: 4 }],
+    //   frameRate: 20,
+    // });
 
-    this.anims.create({
-      key: "right",
-      frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+    // this.anims.create({
+    //   key: "right",
+    //   frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    //   frameRate: 10,
+    //   repeat: -1,
+    // });
+  }
+
+  getBody(): Phaser.Physics.Arcade.Body {
+    return this._body;
+  }
+
+  getCurors(): Phaser.Types.Input.Keyboard.CursorKeys {
+    return this._cursors;
   }
 
   update(time: number, delta: number): void {
     this.setDepth(this.y);
     if (this._cursors.left.isDown) {
-      this._body.setVelocityX(-160);
-      this.anims.play("left", true);
+      this._body.setVelocityX(-this._velocity);
+      this.setFlipX(true);
+      // this.anims.play("left", true);
     } else if (this._cursors.right.isDown) {
-      this._body.setVelocityX(160);
-      this.anims.play("right", true);
-    } else {
-      this._body.setVelocityX(0);
-      this.anims.play("turn");
+      this._body.setVelocityX(this._velocity);
+      this.setFlipX(false);
+      // this.anims.play("right", true);
     }
 
-    if (this._cursors.up.isDown && this._body.touching.down) {
-      this._body.setVelocityY(-330);
+    const _didPressJump = Phaser.Input.Keyboard.JustDown(this._cursors.space);
+
+    if (_didPressJump) {
+      if (this._body.touching.down) {
+        this._canDoubleJump = true;
+        this._body.setVelocityY(-220);
+      } else if (this._canDoubleJump) {
+        this._canDoubleJump = false;
+        this._body.setVelocityY(-220);
+      }
+    }
+
+    if (
+      !this._cursors.left.isDown &&
+      !this._cursors.right.isDown &&
+      !this._cursors.up.isDown &&
+      !this._cursors.down.isDown
+    ) {
+      this._body.setVelocityX(0);
+      this.anims.play("idle", true);
     }
   }
 }
