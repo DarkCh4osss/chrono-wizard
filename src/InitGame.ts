@@ -7,6 +7,7 @@ import GameOver from "./scenes/GameOver";
 import FirstLevel from "./scenes/FirstLevel";
 import GamePlay from "./scenes/GamePlay";
 import { GameData } from "./GameData";
+import FirstLevelPast from "./scenes/FirstLevelPast";
 
 window.addEventListener("load", () => {
   const config: any = {
@@ -19,7 +20,16 @@ window.addEventListener("load", () => {
       height: GameData.globals.gameHeight,
     },
 
-    scene: [Boot, Preloader, Intro, Hud, GamePlay, FirstLevel, GameOver],
+    scene: [
+      Boot,
+      Preloader,
+      Intro,
+      Hud,
+      GamePlay,
+      FirstLevel,
+      FirstLevelPast,
+      GameOver,
+    ],
 
     physics: {
       default: "arcade",

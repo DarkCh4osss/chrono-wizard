@@ -1,7 +1,4 @@
-
 export default class Boot extends Phaser.Scene {
-
-
   constructor() {
     super({
       key: "Boot",
@@ -9,23 +6,18 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
-
-    this.load.image("phaser", "assets/images/phaser.png");
+    this.load.image("logo", "assets/images/logo.png");
     this.load.bitmapFont(
       "arcade",
       "assets/fonts/arcade.png",
       "assets/fonts/arcade.xml"
     );
-
   }
 
-  init() { }
+  init() {}
 
   create() {
-    console.log("create:boot")
+    console.log("create:boot");
     this.scene.start("Preloader");
-
   }
-
-
 }
