@@ -11,8 +11,4 @@ export default class GamePlay extends Phaser.Scene {
     console.log("create:gameplay");
     this._groupFlowers = this.add.group({ runChildUpdate: true });
   }
-
-  removeFlower(flower: Flower) {
-    this._groupFlowers.remove(flower, true, true);
-  }
 }

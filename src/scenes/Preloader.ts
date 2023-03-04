@@ -20,6 +20,7 @@ export default class Preloader extends Phaser.Scene {
   update(time: number, delta: number) {}
 
   init() {
+    localStorage.clear();
     this._image = this.add
       .image(
         GameData.preloader.imageX,
@@ -63,12 +64,8 @@ export default class Preloader extends Phaser.Scene {
           duration: 500,
           onComplete: () => {
             this.scene.start("FirstLevel");
-            //this.scene.start("GameOver");
-            /*
-            this.scene.start("GamePlay");
             this.scene.start("Hud");
             this.scene.bringToTop("Hud");
-            */
           },
         });
       });
