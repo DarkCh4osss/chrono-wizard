@@ -7,6 +7,11 @@ body {
   background-position: center;
 }
 
+@font-face {
+  font-family: EnchantedLand;
+  src: url("../fonts/Enchanted\ Land.otf");
+}
+
 canvas {
   /*image-rendering: optimizeSpeed;*/
   /* Older versions of FF          */

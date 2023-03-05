@@ -14,8 +14,15 @@ export default class FirstLevelPast extends Phaser.Scene {
   private _thirdFlower: Flower;
   private _fourthFlower: Flower;
 
-  private _flowerObtained: boolean;
-  private _flowerDestroyed = localStorage.getItem("flower-destroyed");
+  private _flowerObtained1: boolean;
+  private _flowerObtained2: boolean;
+  private _flowerObtained3: boolean;
+  private _flowerObtained4: boolean;
+
+  private _flowerDestroyed1: string;
+  private _flowerDestroyed2: string;
+  private _flowerDestroyed3: string;
+  private _flowerDestroyed4: string;
 
   private _mainCamera: Phaser.Cameras.Scene2D.Camera;
   private _newPlayerPosX: number;
@@ -27,8 +34,11 @@ export default class FirstLevelPast extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("collider", "assets/images/platform_test.png");
-    this.load.image("vertical_collider", "assets/images/vertical-obstacle.png");
+    this.load.image("collider", "assets/images/platform.png");
+    this.load.image(
+      "vertical_collider",
+      "assets/images/vertical-obstacle-transparent.png"
+    );
     this.load.image(
       "primo_livello_passato",
       "assets/images/primo_livello_passato.png"
@@ -56,7 +66,11 @@ export default class FirstLevelPast extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#8b7971");
     console.log("create:FirstLevel");
 
-    // eventsCenter.on("flower-obtained", this.setObtainedFlower, this);
+    eventsCenter.on("flower-obtained", this.setObtainedFlower, this);
+    this._flowerDestroyed1 = localStorage.getItem("flower-destroyed1");
+    this._flowerDestroyed2 = localStorage.getItem("flower-destroyed2");
+    this._flowerDestroyed3 = localStorage.getItem("flower-destroyed3");
+    this._flowerDestroyed4 = localStorage.getItem("flower-destroyed4");
 
     this.add.image(
       this.game.canvas.width / 2,
@@ -114,6 +128,7 @@ export default class FirstLevelPast extends Phaser.Scene {
       key: "blue-fl",
     });
     this._firstFlower.setFlipX(true);
+    this._firstFlower.setName("primo");
 
     this._secondFlower = new Flower({
       scene: this,
@@ -122,6 +137,7 @@ export default class FirstLevelPast extends Phaser.Scene {
       key: "blue-fl",
     });
     this._secondFlower.setFlipX(true);
+    this._secondFlower.setName("secondo");
 
     this._thirdFlower = new Flower({
       scene: this,
@@ -130,6 +146,7 @@ export default class FirstLevelPast extends Phaser.Scene {
       key: "blue-fl",
     });
     this._thirdFlower.setFlipX(true);
+    this._thirdFlower.setName("terzo");
 
     this._fourthFlower = new Flower({
       scene: this,
@@ -138,6 +155,7 @@ export default class FirstLevelPast extends Phaser.Scene {
       key: "blue-fl",
     });
     this._fourthFlower.setFlipX(true);
+    this._fourthFlower.setName("quarto");
 
     this.physics.add.collider(this._player, this._platforms);
     this.physics.add.collider(this._player, this._stopCamera, () => {
@@ -149,29 +167,29 @@ export default class FirstLevelPast extends Phaser.Scene {
     this.physics.add.collider(this._fourthFlower, this._platforms);
 
     this.physics.add.collider(this._player, this._firstFlower, () => {
-      this._flowerObtained = true;
+      this._flowerObtained1 = true;
       eventsCenter.emit("flower-picked", 1);
       this.removeFlower(this._firstFlower);
       this.updateScore();
     });
 
     this.physics.add.collider(this._player, this._secondFlower, () => {
-      this._flowerObtained = true;
-      eventsCenter.emit("flower-picked", 1);
+      this._flowerObtained2 = true;
+      eventsCenter.emit("flower-picked", 2);
       this.removeFlower(this._secondFlower);
       this.updateScore();
     });
 
     this.physics.add.collider(this._player, this._thirdFlower, () => {
-      this._flowerObtained = true;
-      eventsCenter.emit("flower-picked", true);
+      this._flowerObtained3 = true;
+      eventsCenter.emit("flower-picked", 3);
       this.removeFlower(this._thirdFlower);
       this.updateScore();
     });
 
     this.physics.add.collider(this._player, this._fourthFlower, () => {
-      this._flowerObtained = true;
-      eventsCenter.emit("flower-picked", 1);
+      this._flowerObtained4 = true;
+      eventsCenter.emit("flower-picked", 4);
       this.removeFlower(this._fourthFlower);
       this.updateScore();
     });
@@ -185,8 +203,14 @@ export default class FirstLevelPast extends Phaser.Scene {
     //   .setShadow(2, 2, "#000000", 2)
     //   .setStroke("#ff0000", 5);
 
-    if (this._flowerObtained || this._flowerDestroyed === "true")
+    if (this._flowerObtained1 || this._flowerDestroyed1 === "true")
       this.removeFlower(this._firstFlower);
+    if (this._flowerObtained2 || this._flowerDestroyed2 === "true")
+      this.removeFlower(this._secondFlower);
+    if (this._flowerObtained3 || this._flowerDestroyed3 === "true")
+      this.removeFlower(this._thirdFlower);
+    if (this._flowerObtained4 || this._flowerDestroyed4 === "true")
+      this.removeFlower(this._fourthFlower);
   }
 
   updateScore() {
@@ -209,15 +233,34 @@ export default class FirstLevelPast extends Phaser.Scene {
   //   _firstFlower.getFlower();
   // }
 
-  // setObtainedFlower(flower: boolean) {
-  //   this._flowerObtained = flower;
-  //   console.log(flower, this._flowerObtained);
-  // }
+  setObtainedFlower(numFlowerPicked: number) {
+    switch (numFlowerPicked) {
+      case 1:
+        this.removeFlower(this._firstFlower);
+      case 2:
+        this.removeFlower(this._secondFlower);
+      case 3:
+        this.removeFlower(this._thirdFlower);
+      case 4:
+        this.removeFlower(this._fourthFlower);
+    }
+  }
 
   removeFlower(_flowerToDestroy: Flower) {
     _flowerToDestroy.destroy();
-    localStorage.setItem("flower-destroyed", "true");
-    localStorage.setItem("flower-obtained", "1");
+    console.log(_flowerToDestroy.name);
+    // localStorage.setItem("flower-destroyed", "true");
+    // localStorage.setItem("flower-obtained", "1");
+    switch (_flowerToDestroy.name) {
+      case "primo":
+        localStorage.setItem("flower-destroyed1", "true");
+      case "secondo":
+        localStorage.setItem("flower-destroyed2", "true");
+      case "terzo":
+        localStorage.setItem("flower-destroyed3", "true");
+      case "quarto":
+        localStorage.setItem("flower-destroyed4", "true");
+    }
   }
 
   zoomTo() {

@@ -63,9 +63,10 @@ export default class Preloader extends Phaser.Scene {
           alpha: 0,
           duration: 500,
           onComplete: () => {
-            this.scene.start("FirstLevel");
-            this.scene.start("Hud");
-            this.scene.bringToTop("Hud");
+            this.scene.start("Intro");
+            // this.scene.start("FirstLevel");
+            // this.scene.start("Hud");
+            // this.scene.bringToTop("Hud");
           },
         });
       });

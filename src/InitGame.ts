@@ -8,6 +8,7 @@ import FirstLevel from "./scenes/FirstLevel";
 import GamePlay from "./scenes/GamePlay";
 import { GameData } from "./GameData";
 import FirstLevelPast from "./scenes/FirstLevelPast";
+import Storia from "./scenes/Storia";
 
 window.addEventListener("load", () => {
   const config: any = {
@@ -24,6 +25,7 @@ window.addEventListener("load", () => {
       Boot,
       Preloader,
       Intro,
+      Storia,
       Hud,
       GamePlay,
       FirstLevel,
